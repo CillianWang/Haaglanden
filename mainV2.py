@@ -1,27 +1,22 @@
+# import pyeeg
+import warnings
 import glob
 import math
 import ntpath
 import random, os, sys
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 import matplotlib.pyplot as plt
-import seaborn as sns
-import edfreader
-import models
-import BNN_model
-import mne
-# import pyeeg
-import warnings
+
 
 warnings.filterwarnings('ignore')
 
 from matplotlib.backends.backend_pdf import PdfPages
-from mne.datasets.sleep_physionet._utils import _fetch_one, _data_path, AGE_SLEEP_RECORDS, _check_subjects
+# from mne.datasets.sleep_physionet._utils import _fetch_one, _data_path, AGE_SLEEP_RECORDS, _check_subjects
 from datetime import datetime
-from mne import Epochs, pick_types, find_events
-from mne.io import concatenate_raws, read_raw_edf
-from mne.time_frequency import psd_welch
+# from mne import Epochs, pick_types, find_events
+# from mne.io import concatenate_raws, read_raw_edf
+# from mne.time_frequency import psd_welch
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 # from sklearn.pipeline import make_pipeline
@@ -30,7 +25,7 @@ from tqdm.notebook import tqdm
 from sklearn.model_selection import train_test_split
 # from tensorflow import keras
 # from tensorflow.keras import optimizers, losses
-from tensorflow.keras.utils import to_categorical
+# from tensorflow.keras.utils import to_categorical
 # from tensorflow.keras.models import Model, load_model
 # from tensorflow.keras.layers import Input, Conv1D, Dense, Dropout, MaxPool1D, Activation, SpatialDropout1D, GlobalMaxPool1D
 # from tensorflow.keras.layers import Reshape, LSTM, TimeDistributed, Bidirectional, BatchNormalization, Flatten, RepeatVector
@@ -54,7 +49,8 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from xgboost import XGBClassifier
 import xgboost
 
-
+def to_categorical(y, num_classes):
+    return np.eye(num_classes, dtype='unit8')[y]
 # Library Imports --------------------------------
 # from fetch_data import fetch_data
 
@@ -324,9 +320,9 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.
 if VBS:
     print("Shape of the training dataset:\ntraining dataset: {}\ntest_dataset: {}\n"
           .format(X_train.shape, X_test.shape))
-y_train_ = to_categorical(y_train)
-y_val_ = to_categorical(y_val)
-y_test_ = to_categorical(y_test)
+y_train_ = to_categorical(y_train, 5)
+y_val_ = to_categorical(y_val, 5)
+y_test_ = to_categorical(y_test, 5)
 
 # X_train = np.squeeze(X_train)
 # X_test = np.squeeze(X_test)
@@ -364,7 +360,7 @@ from torch_BNN import Passthrough
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import TensorDataset, DataLoader
-model_cnn = Passthrough()
+# model_cnn = Passthrough()
 import torch
 import torch.nn as nn
 import torchbnn as bnn
@@ -381,8 +377,8 @@ my_dataloader = DataLoader(my_dataset, batch_size= batch_size)
 
 from torch_BNN import model_cnn, model_bnn, train_bnn, train_cnn, Passthrough
 
-model = model_cnn().to("cuda")
-# model = model_bnn().to("cuda")
+# model = model_cnn().to("cuda")
+model = model_bnn().to("cuda")
 # model = Passthrough()
 # ce_loss = nn.NLLLoss()
 # kl_loss = bnn.BKLLoss(reduction='mean', last_layer_only=False)
