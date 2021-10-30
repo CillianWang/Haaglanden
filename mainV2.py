@@ -32,7 +32,7 @@ from sklearn.model_selection import train_test_split
 # from tensorflow.keras.layers import concatenate
 # from tensorflow.keras.callbacks import EarlyStopping
 # from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, CSVLogger
-from imblearn.over_sampling import SMOTE
+# from imblearn.over_sampling import SMOTE
 from sklearn.svm import SVC
 # from sklearn.externals import joblib
 # from sklearn.preprocessing import StandardScaler
@@ -46,8 +46,8 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, Gradien
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-from xgboost import XGBClassifier
-import xgboost
+# from xgboost import XGBClassifier
+# import xgboost
 
 def to_categorical(y, num_classes):
     return np.eye(num_classes, dtype='unit8')[y]
